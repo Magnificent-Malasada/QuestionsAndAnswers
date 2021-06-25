@@ -1,0 +1,30 @@
+API Features
+
+- GET /qa/questions
+  Retrieves list of question for a particular product (does NOT include reported questions)
+
+- GET /qa/questions/:question_id/answers
+  Returns answers for a given question, does NOT include reported answers
+
+- POST /qa/questions
+  Adds a question for given product
+  parameters: body, name, email, product_id
+
+- POST /qa/questions/:question_id/answers
+  Adds an answer for a given question
+  Parameter: question_id
+  Body parameter: body, name, email, photos
+
+- PUT /qa/questions/:question_id/helpful
+  Updates question to show it was helpful
+  question_id
+
+- PUT /qa/questions/:question_id/report
+  Updates question to show it was reported
+  question_id
+
+- PUT /qa/answers/:answer_id/helpful
+  Updates answer to show it was helpful
+
+- PUT /qa/answers/:answer_id/report
+  Updates answer to show it has been reported
