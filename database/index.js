@@ -20,4 +20,6 @@ pool.query('SELECT NOW()', (err, res) => {
   }
 });
 
-module.exports = pool;
+module.exports = {
+  query: (text, params, callback) => pool.query(text, params, callback),
+}

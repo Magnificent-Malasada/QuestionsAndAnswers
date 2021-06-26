@@ -72,14 +72,8 @@ FROM (
   SELECT *
   FROM
     questions
-  WHERE product_id = 25167
-) as questions;
-
-SELECT json_agg(questions)
-FROM (
-  SELECT *
-  FROM
-    questions
+  INNER JOIN answers ON answers.question_id = questions.question_id
+  INNER JOIN photos ON photos.answer_id = answers.answer_id
   WHERE product_id = 25167
 ) as questions;
 
@@ -118,7 +112,7 @@ COMMIT;
 
 INSERT INTO questions (question_body, question_date, asker_name, asker_email)
 VALUES (body, current_timestamp, name, email)
-WHERE product_id = req.product_id;
+WHERE product_id = product_id;
 
 
 

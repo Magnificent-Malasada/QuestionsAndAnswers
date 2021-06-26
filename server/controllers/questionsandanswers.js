@@ -11,5 +11,8 @@ module.exports = {
         res.status(200).send(data)
       }
     })
+  },
+  postQuestion: function (req, res) {
+    console.log('req.params', req.params)
   }
 };
