@@ -13,6 +13,12 @@ module.exports = {
     })
   },
   postQuestion: function (req, res) {
-    console.log('req.params', req.params)
+    models.addQuestion(req.body, (err, data) => {
+      if (err) {
+        res.status(500).send(err)
+      } else {
+        res.status(200).send('Created')
+      }
+    })
   }
 };

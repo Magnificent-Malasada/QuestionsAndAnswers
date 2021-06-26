@@ -18,6 +18,8 @@ app.put('/qa/questions/:question_id/helpful', qa.putQuestionHelpful);
 //   res.send('Post request success!')
 // });
 
+app.post('/qa/questions', qa.postQuestion);
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 });

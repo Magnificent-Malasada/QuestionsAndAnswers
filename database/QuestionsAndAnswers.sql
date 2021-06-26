@@ -113,7 +113,3 @@ COMMIT;
 INSERT INTO questions (question_body, question_date, asker_name, asker_email)
 VALUES (body, current_timestamp, name, email)
 WHERE product_id = product_id;
-
-
-
-
