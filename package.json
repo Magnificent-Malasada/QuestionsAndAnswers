@@ -21,6 +21,7 @@
   "homepage": "https://github.com/Magnificent-Malasada/QuestionsAndAnswers#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "jest": "^27.0.5",
     "nodejs": "^0.0.0",
     "nodemon": "^2.0.7",
     "pg": "^8.6.0",

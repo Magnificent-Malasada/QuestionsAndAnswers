@@ -10,11 +10,14 @@ const pool = new Pool(
     password: password,
     port: 5432,
   }
-)
+);
+
 pool.query('SELECT NOW()', (err, res) => {
   if (err) {
     console.log(err)
   } else {
     console.log('Postgres connected!')
   }
-})
+});
+
+module.exports = pool;

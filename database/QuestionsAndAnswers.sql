@@ -42,28 +42,48 @@ DELIMITER ','
 CSV HEADER;
 
 -- GET list of question per product id
-SELECT
-  questions.id as [product_id.results.question_id],
-  questions.product_id as product_id,
-  questions.question_body as [results.question_body],
-  questions.question_date as [results.question_date],
-  questions.asker_name as [results.asker_name],
-  questions.question_helpfulness as [results.question_helpfulness]
-  questions.question_reported as [results.reported]
-  answers.id as [results.answers]
-  answers.answer_body as [results.answers.body]
-  answers.answer_date as [results.answers.date]
-  answers.answerer_name as [results.answers.answerer_name]
-  answers.answer_helpfulness as [results.answers.helpfulness]
-  photos.url as [results.answers.photos]
-FROM
-  questions
-INNER JOIN answers ON answers.question_id = questions.id
-INNER JOIN photos ON photos.answer_id = answers.id
-WHERE product_id = 25167
-LIMIT 5
-FOR JSON PATH, ROOT('product_id', 'results')
-declare @json varchar(4000)
+SELECT json_agg(t)
+FROM (
+  SELECT
+    questions.id as [results.question_id],
+    questions.product_id as product_id,
+    questions.question_body as [results.question_body],
+    questions.question_date as [results.question_date],
+    questions.asker_name as [results.asker_name],
+    questions.question_helpfulness as [results.question_helpfulness]
+    questions.question_reported as [results.reported]
+    answers.id as [results.answers]
+    answers.answer_body as [results.answers.body]
+    answers.answer_date as [results.answers.date]
+    answers.answerer_name as [results.answers.answerer_name]
+    answers.answer_helpfulness as [results.answers.helpfulness]
+    photos.url as [results.answers.photos]
+  FROM
+    questions
+  INNER JOIN answers ON answers.question_id = questions.id
+  INNER JOIN photos ON photos.answer_id = answers.id
+  WHERE product_id = 25167
+) t;
+
+-- test
+
+SELECT json_agg(questions)
+FROM (
+  SELECT *
+  FROM
+    questions
+  WHERE product_id = 25167
+) as questions;
+
+SELECT json_agg(questions)
+FROM (
+  SELECT *
+  FROM
+    questions
+  WHERE product_id = 25167
+) as questions;
+
+ -- GET list of answers per question id
 
 
 -- PUT updates answer to show it has been reported
@@ -76,7 +96,13 @@ WHERE answer_id = :id
 
 UPDATE answers
 SET answer_helpfulness = answer_helpfulness + 1
-WHERE answer_id = :id
+WHERE id = :id
+
+-- PUT updates question to show it was helpful
+
+UPDATE questions
+SET question_helpfulness = question_helpfulness + 1
+WHERE id = :id
 
 -- POST an answer for a given question
 
