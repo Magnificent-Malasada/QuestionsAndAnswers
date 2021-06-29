@@ -51,8 +51,13 @@ module.exports = {
         callback(err)
       } else {
         let allQuestionsPerProductId = results.rows[0].json_agg
-        let transformed = helper.transformData(product_id, allQuestionsPerProductId);
-        callback(null, transformed);
+        helper.transformData(product_id, allQuestionsPerProductId, (err, data) => {
+          if (err) {
+            console.log(err)
+          } else {
+            callback(null, data);
+          }
+        });
       }
     })
   }

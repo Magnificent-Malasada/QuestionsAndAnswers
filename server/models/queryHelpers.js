@@ -1,7 +1,7 @@
 const getAnswers = require('./getAnswersPerQuestionId.js');
 
 module.exports = {
-  transformData: function (productId, questionsPerProductId) {
+  transformData: function (productId, questionsPerProductId, callback) {
     let transformed = {
       "product_id": productId.toString(),
       "results": questionsPerProductId
@@ -28,14 +28,16 @@ module.exports = {
                 "helpfulness": answer_helpfulness
               }
               //console.log(`resultsObject.answers[${answer_id}]`, resultsObject.answers[`${answer_id}`]);
-              resultsObject.answers[`${answer_id}`] = answerObject;
+              resultsObject.answers[answer_id] = answerObject;
               console.log('transformed a', transformed);
+              console.log('answers', resultsObject.answers[answer_id]);
             })
+            if (i === transformed.results.length - 1) {
+              callback(null, transformed)
+            }
           }
         }
       })
     }
-    //console.log('transformed b', transformed);
-    return transformed;
   }
 }
