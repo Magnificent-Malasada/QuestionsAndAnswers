@@ -1,4 +1,5 @@
 const db = require('../../database/index.js');
+const helper = require('./queryHelpers.js');
 
 module.exports = {
   updateQuestionHelpful: function (questionId, callback) {
@@ -20,11 +21,38 @@ module.exports = {
       VALUES ($1, current_timestamp, $2, $3, $4)
       `;
     db.query(sqlString, [body, name, email, product_id], (err, results) => {
-      console.log('sqlString', sqlString)
       if (err) {
         callback(err);
       } else {
         callback(null, results);
+      }
+    })
+  },
+  getQuestions: function (queryBody, callback) {
+    let { product_id } = queryBody;
+    let sqlString1 = `
+    SELECT json_agg(t)
+    FROM (
+      SELECT
+        questions.question_id,
+        questions.product_id,
+        questions.question_body,
+        questions.question_date,
+        questions.asker_name,
+        questions.question_helpfulness,
+        questions.question_reported
+      FROM
+        questions
+      WHERE product_id = ($1) AND question_reported = false
+      ) t
+    `;
+    db.query(sqlString1, [product_id], (err, results) => {
+      if (err) {
+        callback(err)
+      } else {
+        let allQuestionsPerProductId = results.rows[0].json_agg
+        let transformed = helper.transformData(product_id, allQuestionsPerProductId);
+        callback(null, transformed);
       }
     })
   }

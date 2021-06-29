@@ -20,5 +20,15 @@ module.exports = {
         res.status(200).send('Created')
       }
     })
+  },
+  getAllQuestions: function (req, res) {
+    console.log('req.query', req.query);
+    models.getQuestions(req.query, (err, data) => {
+      if (err) {
+        res.status(500).send(err)
+      } else {
+        res.status(200).send(data)
+      }
+    })
   }
 };

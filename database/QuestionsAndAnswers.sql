@@ -4,6 +4,8 @@ CREATE DATABASE QuestionsAndAnswers;
 
 USE QuestionsAndAnswers;
 
+-- table creation
+
 CREATE TABLE questions (
   id SERIAL PRIMARY KEY NOT NULL,
   product_id INTEGER NOT NULL,
@@ -41,41 +43,70 @@ FROM '/Users/jennngai/Downloads/questions.csv'
 DELIMITER ','
 CSV HEADER;
 
--- GET list of question per product id
+-- GET list of question per product id NO reported questions
 SELECT json_agg(t)
 FROM (
   SELECT
-    questions.id as [results.question_id],
-    questions.product_id as product_id,
-    questions.question_body as [results.question_body],
-    questions.question_date as [results.question_date],
-    questions.asker_name as [results.asker_name],
-    questions.question_helpfulness as [results.question_helpfulness]
-    questions.question_reported as [results.reported]
-    answers.id as [results.answers]
-    answers.answer_body as [results.answers.body]
-    answers.answer_date as [results.answers.date]
-    answers.answerer_name as [results.answers.answerer_name]
-    answers.answer_helpfulness as [results.answers.helpfulness]
-    photos.url as [results.answers.photos]
-  FROM
-    questions
-  INNER JOIN answers ON answers.question_id = questions.id
-  INNER JOIN photos ON photos.answer_id = answers.id
-  WHERE product_id = 25167
-) t;
-
--- test
-
-SELECT json_agg(questions)
-FROM (
-  SELECT *
+    questions.question_id,
+    questions.product_id,
+    questions.question_body,
+    questions.question_date,
+    questions.asker_name,
+    questions.question_helpfulness,
+    questions.question_reported,
+    answers.answer_id,
+    answers.answer_body,
+    answers.answer_date,
+    answers.answerer_name,
+    answers.answer_helpfulness,
+    photos.url
   FROM
     questions
   INNER JOIN answers ON answers.question_id = questions.question_id
   INNER JOIN photos ON photos.answer_id = answers.answer_id
-  WHERE product_id = 25167
-) as questions;
+  WHERE product_id = 25167 AND question_reported = false
+) t;
+
+-- GET part 1/3 select all questions from the product id
+SELECT json_agg(t)
+FROM (
+  SELECT
+    questions.question_id,
+    questions.product_id,
+    questions.question_body,
+    questions.question_date,
+    questions.asker_name,
+    questions.question_helpfulness,
+    questions.question_reported
+  FROM
+    questions
+  WHERE product_id = 25167 AND question_reported = false
+) t;
+
+-- GET part 2/3 select all answers from the question id
+
+SELECT json_agg(t)
+  FROM (
+    SELECT
+      answers.answer_id,
+      answers.answer_body,
+      answers.answer_date,
+      answers.answerer_name,
+      answers.answer_helpfulness
+    FROM
+      answers
+    WHERE question_id = ($1)
+  ) t;
+
+-- GET part 3/3 select all photos from answer id
+
+FROM (
+  SELECT
+    photos.url
+  FROM
+    answers
+  WHERE answer_id = (?)
+) t;
 
  -- GET list of answers per question id
 

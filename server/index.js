@@ -11,12 +11,9 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 });
 
-app.put('/qa/questions/:question_id/helpful', qa.putQuestionHelpful);
+app.get('/qa/questions/', qa.getAllQuestions);
 
-// app.post('/qa/questions/:question_id/answers', (req, res) => {
-//   console.log(req.params)
-//   res.send('Post request success!')
-// });
+app.put('/qa/questions/:question_id/helpful', qa.putQuestionHelpful);
 
 app.post('/qa/questions', qa.postQuestion);
 
