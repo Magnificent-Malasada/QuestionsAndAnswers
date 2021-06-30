@@ -6,7 +6,7 @@ module.exports = {
       "product_id": productId.toString(),
       "results": questionsPerProductId
     };
-
+    console.log('transformed', transformed);
     for (let i = 0; i < transformed.results.length; i++) {
       let resultsObject = transformed.results[i];
       resultsObject.answers = {};
@@ -15,7 +15,7 @@ module.exports = {
         if (err) {
           console.log(err)
         } else {
-          console.log(null, answers);
+          //console.log(null, answers);
           let answerData = answers;
           if (Array.isArray(answerData)) {
             answerData.forEach((answer) => {
@@ -29,12 +29,13 @@ module.exports = {
               }
               //console.log(`resultsObject.answers[${answer_id}]`, resultsObject.answers[`${answer_id}`]);
               resultsObject.answers[answer_id] = answerObject;
-              console.log('transformed a', transformed);
-              console.log('answers', resultsObject.answers[answer_id]);
+              // console.log('transformed a', transformed);
+              // console.log('answers', resultsObject.answers[answer_id]);
             })
-            if (i === transformed.results.length - 1) {
-              callback(null, transformed)
-            }
+            console.log('i', i, 'length', transformed.results.length - 1)
+          }
+          if (i === transformed.results.length - 1) {
+            callback(null, transformed)
           }
         }
       })

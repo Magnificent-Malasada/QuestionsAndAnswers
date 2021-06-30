@@ -1,4 +1,5 @@
 const models = require('../models/questionsandanswers.js');
+const modelsGetQuestions = require('../models/getQuestionsByProductId.js');
 
 module.exports = {
   putQuestionHelpful: function (req, res) {
@@ -22,8 +23,7 @@ module.exports = {
     })
   },
   getAllQuestions: function (req, res) {
-    console.log('req.query', req.query);
-    models.getQuestions(req.query, (err, data) => {
+    modelsGetQuestions(req.query, (err, data) => {
       if (err) {
         res.status(500).send(err)
       } else {

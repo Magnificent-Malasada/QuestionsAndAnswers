@@ -48,7 +48,6 @@ SELECT json_agg(t)
 FROM (
   SELECT
     questions.question_id,
-    questions.product_id,
     questions.question_body,
     questions.question_date,
     questions.asker_name,
@@ -64,7 +63,7 @@ FROM (
     questions
   INNER JOIN answers ON answers.question_id = questions.question_id
   INNER JOIN photos ON photos.answer_id = answers.answer_id
-  WHERE product_id = 25167 AND question_reported = false
+  WHERE product_id = ($1) AND question_reported = false
 ) t;
 
 -- GET part 1/3 select all questions from the product id
@@ -144,3 +143,11 @@ COMMIT;
 INSERT INTO questions (question_body, question_date, asker_name, asker_email)
 VALUES (body, current_timestamp, name, email)
 WHERE product_id = product_id;
+
+-- outer left joins between questions and answers
+
+SELECT questions.question_id
+  FROM questions
+  LEFT JOIN answers ON questions.question_id = answers.question_id
+  WHERE answers.question_id IS NULL
+  LIMIT 5;
