@@ -1,0 +1,31 @@
+{
+  "name": "questionsandanswers",
+  "version": "1.0.0",
+  "description": "This is the API set up for the Questions and Answers component of Front End Capstone.",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "react-dev": "webpack -d eval-source-map -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Magnificent-Malasada/QuestionsAndAnswers.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Magnificent-Malasada/QuestionsAndAnswers/issues"
+  },
+  "homepage": "https://github.com/Magnificent-Malasada/QuestionsAndAnswers#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "jest": "^27.0.5",
+    "nodejs": "^0.0.0",
+    "nodemon": "^2.0.7",
+    "pg": "^8.6.0",
+    "postgresql": "^0.0.1",
+    "webpack": "^5.40.0"
+  }
+}

@@ -21,7 +21,7 @@ let questionsSchema = new Schema({
     asker_name: String,
     asker_email: String,
     helpfulness: Number,
-    reported: Number,
+    reported: Boolean,
     answers: [
       // array of references to Answers document
     ]
@@ -40,7 +40,7 @@ let answersSchema = new Schema({
     answerer_name: String,
     answerer_email: String,
     helpfulness: Number,
-    reported: Number,
+    reported: Boolean,
     photos: [
       // array of references to Photos document
     ]
