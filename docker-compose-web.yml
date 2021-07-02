@@ -1,0 +1,15 @@
+# docker-compose.yml
+version: '3.1'
+services:
+  web:
+    build: .
+    ports:
+      - "9000:4000"
+    volumes:
+      - .:/sdcapi
+    environment:
+      DB_HOST: "172.31.12.19"
+      DB_PORT: "5432"
+      DB_USER: "postgres"
+      DB_PASS: "mypassword"
+      DB_NAME: "sdcquestionsandanswers"
