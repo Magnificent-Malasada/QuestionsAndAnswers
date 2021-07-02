@@ -1,14 +1,13 @@
 const { Pool } = require('pg')
-const password = require('../config.js').postgres;
 // pools will use environment variables
 // for connection information
 const pool = new Pool(
   {
-    user: 'postgres',
-    host: 'localhost',
-    database: 'sdcquestionsandanswers',
-    password: password,
-    port: 5432,
+    user: process.env.DB_USER || 'postgres',
+    host: process.env.DB_HOST || 'localhost',
+    database: process.env.DB_NAME || 'sdcquestionsandanswers',
+    password: process.env.DB_PASS || 'mypassword',
+    port: process.env.DB_PORT || 5432,
   }
 );
 

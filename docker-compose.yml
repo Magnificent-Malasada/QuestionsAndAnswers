@@ -1,0 +1,28 @@
+# docker-compose.yml
+version: '3.1'
+services:
+  web:
+    build: .
+    ports:
+      - "9000:4000"
+    volumes:
+      - .:/sdcapi
+    environment:
+      DB_HOST: "db"
+      DB_PORT: "5432"
+      DB_USER: "postgres"
+      DB_PASS: "mypassword"
+      DB_NAME: "sdcquestionsandanswers"
+  db:
+    image: postgres:13.3
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: sdcquestionsandanswers
+    ports:
+      - "3005:5432"
+    volumes:
+      - "pgdata:/var/lib/postgresql/data"
+
+volumes:
+  pgdata:

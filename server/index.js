@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-const port = 4000;
+const port = process.env.PORT || "4000";
 const db = require('../database');
 const qa = require('./controllers/questionsandanswers.js');
 
