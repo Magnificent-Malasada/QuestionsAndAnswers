@@ -2,7 +2,7 @@
 start-web:
 	docker-compose -f docker-compose-web.yml up --detach
 
-stop-db:
+stop-web:
 	docker-compose -f docker-compose-web.yml down
 	
 
