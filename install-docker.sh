@@ -6,7 +6,8 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 apt-get update
-apt-get install docker.io
+apt-get install -y docker.io
 
-usermod -aG docker $USER
-newgrp docker
+actual_user="$(who am i | awk '{print $1}')"
+usermod -aG docker $actual_user 
+#su - $actual_user -c "newgrp docker"
