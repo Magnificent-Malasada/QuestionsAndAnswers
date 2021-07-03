@@ -13,3 +13,11 @@ services:
       DB_USER: "postgres"
       DB_PASS: "mypassword"
       DB_NAME: "sdcquestionsandanswers"
+
+  nginx:
+    image: nginx:1.21.0-alpine
+    ports:
+      - "80:80"
+    volumes:
+      - "./nginx.conf:/etc/nginx/nginx.conf"
+      - "./public:/var/www/public"
