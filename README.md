@@ -8,4 +8,9 @@ The following API routes are built out:
 - PUT whether or not a question was helpful
 
 To start, run the following commands:
+- install
 - npm start
+
+To launch EC2 instance
+- create an SSH key
+- Access Github repo with SSH key
